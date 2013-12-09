@@ -55,7 +55,8 @@ printRow([X|Y]) :- write(X), write(' '), printRow(Y).
 
 % This one doesn't work yet in one command
 setValue(container(ID, size(CH, CW, CD), Content), Height, Width, Value, container(ID, size(CH, CW, CD), NewContent)) :-
-	setValue_height(Content, Height, Width, Value, NewContent).
+	H is CH - 1 - Height, % Need to invert cause end array is our bottom
+	setValue_height(Content, H, Width, Value, NewContent).
 
 setValue_width([_|Y], 0, 0, Value, [Value|Y]).
 setValue_width([X|Y], 0, Width, Value, [X|NC]) :-
@@ -76,7 +77,7 @@ placeHorizontalLineAt(
 	container(ContainerID, size(CH, CW, CD), Content),
 	Height,
 	Width,
-	0,
+	1,
 	Value,
 	NewContainer
 ) :-
