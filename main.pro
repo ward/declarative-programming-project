@@ -41,7 +41,7 @@ printContainer(container(ID, size(H, W, D), Content)) :-
 
 % Recursively print the contents of the container
 printContent([]).
-printContent([Row|Rows]) :- printRow(Row), nl, printContent(Rows).
+printContent([Row|Rows]) :- printContent(Rows), nl, printRow(Row).
 
 % Recursively print out a row
 printRow([]).
@@ -55,8 +55,7 @@ printRow([X|Y]) :- write(X), write(' '), printRow(Y).
 
 % This one doesn't work yet in one command
 setValue(container(ID, size(CH, CW, CD), Content), Height, Width, Value, container(ID, size(CH, CW, CD), NewContent)) :-
-	H is CH - 1 - Height, % Need to invert cause end array is our bottom
-	setValue_height(Content, H, Width, Value, NewContent).
+	setValue_height(Content, Height, Width, Value, NewContent).
 
 setValue_width([_|Y], 0, 0, Value, [Value|Y]).
 setValue_width([X|Y], 0, Width, Value, [X|NC]) :-
