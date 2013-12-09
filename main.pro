@@ -3,9 +3,9 @@
 % Represent a container as a matrix of all 0
 % Set things to something else as its place gets taken
 
-% container(id, content)
+% container(id, size(height, width, depth), content)
 % Every item in the list of lists is a spot of 1x1x1
-container(1, [
+container(1, size(10, 10, 1), [
 	[0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0],
@@ -18,7 +18,7 @@ container(1, [
 	[0,0,0,0,0,0,0,0,0,0]
 ]).
 
-container(2, [
+container(2, size(10, 10, 1), [
 	[0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0],
@@ -35,7 +35,7 @@ container(2, [
 %%%%%Printing%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Prints container (header + its content)
-printContainer(container(ID, Content)) :-
+printContainer(container(ID, size(H, W, D), Content)) :-
 	write('Container '), write(ID), write(':'), nl,
 	printContent(Content).
 
@@ -54,7 +54,7 @@ printRow([X|Y]) :- write(X), write(' '), printRow(Y).
 % Height and width start counting in lower left corner which is (0,0)
 
 % This one doesn't work yet in one command
-setValue(container(ID, Content), Height, Width, Value, container(ID, NewContent)) :-
+setValue(container(ID, size(CH, CW, CD), Content), Height, Width, Value, container(ID, size(CH, CW, CD), NewContent)) :-
 	setValue_height(Content, Height, Width, Value, NewContent).
 
 setValue_width([_|Y], 0, 0, Value, [Value|Y]).
@@ -73,37 +73,37 @@ setValue_height([Row|Rows], Height, Width, Value, [Row|NC]) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 placeHorizontalLineAt(
-	container(ContainerID, Content),
+	container(ContainerID, size(CH, CW, CD), Content),
 	Height,
 	Width,
 	0,
 	Value,
 	NewContainer
 ) :-
-	setValue(container(ContainerID, Content), Height, Width, Value, NewContainer).
+	setValue(container(ContainerID, size(CH, CW, CD), Content), Height, Width, Value, NewContainer).
 
 placeHorizontalLineAt(
-	container(ContainerID, Content),
+	container(ContainerID, size(CH, CW, CD), Content),
 	Height,
 	Width,
 	LineWidth,
 	Value,
 	NewContainer
 ) :-
-	setValue(container(ContainerID, Content), Height, Width, Value, NC),
+	setValue(container(ContainerID, size(CH, CW, CD), Content), Height, Width, Value, NC),
 	W is Width + 1,
 	LW is LineWidth - 1,
 	placeHorizontalLineAt(NC, Height, W, LW, Value, NewContainer).
 
 placeObjectAt(
-	container(ContainerID, Content),
+	container(ContainerID, size(CH, CW, CD), Content),
 	object(ObjectID, size(1, ObjectWidth, ObjectDepth)),
 	Height,
 	Width,
 	NewContainer
 ) :-
 	placeHorizontalLineAt(
-		container(ContainerID, Content),
+		container(ContainerID, size(CH, CW, CD), Content),
 		Height,
 		Width,
 		ObjectWidth,
@@ -112,14 +112,14 @@ placeObjectAt(
 	).
 
 placeObjectAt(
-	container(ContainerID, Content),
+	container(ContainerID, size(CH, CW, CD), Content),
 	object(ObjectID, size(ObjectHeight, ObjectWidth, ObjectDepth)),
 	Height,
 	Width,
 	NewContainer
 ) :-
 	placeHorizontalLineAt(
-		container(ContainerID, Content),
+		container(ContainerID, size(CH, CW, CD), Content),
 		Height,
 		Width,
 		ObjectWidth,
