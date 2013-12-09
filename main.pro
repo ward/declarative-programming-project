@@ -89,3 +89,33 @@ placeObjectAt(
 		Width,
 		NewContainer
 	).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% By definition a coordinate in a container is free if it equals 0.
+findFreeSpot(
+	container(ID, size(CH, CW, CD), [Row|Rows]),
+	object(ObjectID, size(OH, OW, OD)),
+	FreeHeight,
+	FreeWidth
+) :-
+	nth0(FreeWidth, Row, 0),
+	FreeHeight is 0.
+% Now if there wasn't one free in the previous, we try on the next
+findFreeSpot(
+	container(ID, size(CH, CW, CD), [Row|Rows]),
+	object(ObjectID, size(OH, OW, OD)),
+	FreeHeight,
+	FreeWidth
+) :-
+	CH2 is CH - 1,
+	findFreeSpot(
+		container(ID, size(CH2, CW, CD), Rows),
+		object(ObjectID, size(OH, OW, OD)),
+		FH,
+		FreeWidth
+	),
+	FreeHeight is FH + 1.
