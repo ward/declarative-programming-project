@@ -52,7 +52,7 @@ placeHorizontalLineAt(
 
 placeObjectAt(
 	container(ContainerID, size(CH, CW, CD), Content),
-	object(ObjectID, size(1, ObjectWidth, ObjectDepth)),
+	object(ObjectID, size(1, ObjectWidth, _)),
 	Height,
 	Width,
 	NewContainer
@@ -98,7 +98,7 @@ placeObjectAt(
 
 % By definition a coordinate in a container is free if it equals 0.
 findFreeSpot(
-	container(ID, size(CH, CW, CD), [Row|Rows]),
+	container(_, _, [Row|_]),
 	FreeHeight,
 	FreeWidth
 ) :-
@@ -106,7 +106,7 @@ findFreeSpot(
 	FreeHeight is 0.
 % Now if there wasn't one free in the previous, we try on the next
 findFreeSpot(
-	container(ID, size(CH, CW, CD), [Row|Rows]),
+	container(ID, size(CH, CW, CD), [_|Rows]),
 	FreeHeight,
 	FreeWidth
 ) :-
@@ -120,13 +120,13 @@ findFreeSpot(
 
 % Now use findFreeSpot to get all the free spots in container
 allFreeSpots(
-	container(ID, size(CH, CW, CD), [Row|Rows]),
+	container(ID, size(CH, CW, CD), Content),
 	Freespots
 ) :-
 	findall(
 		[H, W],
 		findFreeSpot(
-			container(ID, size(CH, CW, CD), [Row|Rows]),
+			container(ID, size(CH, CW, CD), Content),
 			H,
 			W
 		),
@@ -137,7 +137,7 @@ allFreeSpots(
 % (matching the lower left corner of the object to the position)
 checkFree(
 	container(ID, size(CH, CW, CD), [Row|Rows]),
-	object(ObjectID, size(OH, OW, OD)),
+	object(_, size(OH, OW, _)),
 	Height,
 	Width
 ) :-
