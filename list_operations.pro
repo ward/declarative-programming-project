@@ -13,3 +13,8 @@ occursInList([X|Xs], Value, Amount) :-
 listInList(List1, []) :- fail.
 listInList(List1, [X|Xs]) :- prefix(List1, [X|Xs]).
 listInList(List1, [X|Xs]) :- listInList(List1, Xs).
+
+% If it returns false, that means you're dropping more elements
+% than there are in the List.
+dropN(List, N, Output) :- length(X, N), append(X, Output, List), !.
+dropN(List, N, []).
