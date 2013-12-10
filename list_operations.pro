@@ -24,9 +24,8 @@ dropN(_, _, []).
 listInListAt(ListNeedle, ListHay, N) :- dropN(ListHay, N, NewList), prefix(ListNeedle, NewList).
 
 % Creates a list of N elements initialized with Value
-% Cut to not keep looking endlessly after creating one.
-createList(0, _, []) :- true, !.
-createList(N, Value, [Value|List]) :- N0 is N - 1, createList(N0, Value, List).
+createList(0, _, []).
+createList(N, Value, [Value|List]) :- createList(N0, Value, List), N is N0 + 1.
 
 % See if block of Value is at position X, Y in matrix
 % Y is index for outer array, X for inner
