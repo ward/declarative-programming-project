@@ -1,0 +1,15 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": false,
+			"path": "/home/ward/declprog-project"
+		}
+	],
+	"settings":
+	{
+		"word_wrap": true,
+		"ensure_newline_at_eof_on_save": true,
+		"default_line_ending": "unix"
+	}
+}
