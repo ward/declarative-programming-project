@@ -43,5 +43,5 @@ blockInMatrix(Matrix, X, Y, Value, Width, Height) :-
 
 
 %
-membersOfLists(E1, L1, E2, L2) :- member(E1, L1), member(E2, L2).
-listCombinations(L1, L2, ListOut) :- findall([X, Y], membersOfLists(X, L1, Y, L2), ListOut).
+listCombinations_membersOfLists(E1, L1, E2, L2) :- member(E1, L1), member(E2, L2).
+listCombinations(L1, L2, ListOut) :- findall([X, Y], listCombinations_membersOfLists(X, L1, Y, L2), ListOut).

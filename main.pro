@@ -1,5 +1,6 @@
 :- consult('containers.pro').
 :- consult('print.pro').
+:- consult('list_operations.pro').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%Set a value at Height/Width%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -98,7 +99,6 @@ placeObjectAt(
 % By definition a coordinate in a container is free if it equals 0.
 findFreeSpot(
 	container(ID, size(CH, CW, CD), [Row|Rows]),
-	object(ObjectID, size(OH, OW, OD)),
 	FreeHeight,
 	FreeWidth
 ) :-
@@ -107,15 +107,44 @@ findFreeSpot(
 % Now if there wasn't one free in the previous, we try on the next
 findFreeSpot(
 	container(ID, size(CH, CW, CD), [Row|Rows]),
-	object(ObjectID, size(OH, OW, OD)),
 	FreeHeight,
 	FreeWidth
 ) :-
 	CH2 is CH - 1,
 	findFreeSpot(
 		container(ID, size(CH2, CW, CD), Rows),
-		object(ObjectID, size(OH, OW, OD)),
 		FH,
 		FreeWidth
 	),
 	FreeHeight is FH + 1.
+
+% Now use findFreeSpot to get all the free spots in container
+allFreeSpots(
+	container(ID, size(CH, CW, CD), [Row|Rows]),
+	Freespots
+) :-
+	findall(
+		[H, W],
+		findFreeSpot(
+			container(ID, size(CH, CW, CD), [Row|Rows]),
+			H,
+			W
+		),
+		Freespots
+	).
+
+% Checks for Height and Width position if object can be placed there
+% (matching the lower left corner of the object to the position)
+checkFree(
+	container(ID, size(CH, CW, CD), [Row|Rows]),
+	object(ObjectID, size(OH, OW, OD)),
+	Height,
+	Width
+) :-
+	allFreeSpots(container(ID, size(CH, CW, CD), [Row|Rows]), Freespots),
+	WidthEnd is Width + OW,
+	HeightEnd is Height + OH,
+	numlist(Width, WidthEnd, Xs),
+	numlist(Height, HeightEnd, Ys),
+	listCombinations(Xs, Ys, Combined),
+	subset(Combined, Freespots).
