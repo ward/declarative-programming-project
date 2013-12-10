@@ -21,3 +21,8 @@ dropN(List, N, Output) :- length(X, N), append(X, Output, List), !.
 dropN(List, N, []).
 
 listInListAt(ListNeedle, ListHay, N) :- dropN(ListHay, N, NewList), prefix(ListNeedle, NewList).
+
+% Creates a list of N elements initialized with Value
+% Cut to not keep looking endlessly after creating one.
+createList(0, _, []) :- true, !.
+createList(N, Value, [Value|List]) :- N0 is N - 1, createList(N0, Value, List).
