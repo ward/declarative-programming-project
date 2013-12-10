@@ -142,9 +142,12 @@ checkFree(
 	Width
 ) :-
 	allFreeSpots(container(ID, size(CH, CW, CD), [Row|Rows]), Freespots),
-	WidthEnd is Width + OW,
-	HeightEnd is Height + OH,
-	numlist(Width, WidthEnd, Xs),
-	numlist(Height, HeightEnd, Ys),
+	member([H, W], Freespots),
+	WidthEnd is W + OW,
+	HeightEnd is H + OH,
+	numlist(W, WidthEnd, Xs),
+	numlist(H, HeightEnd, Ys),
 	listCombinations(Xs, Ys, Combined),
-	subset(Combined, Freespots).
+	subset(Combined, Freespots),
+	Height is H,
+	Width is W.
