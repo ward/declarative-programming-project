@@ -18,8 +18,8 @@ listInList(List1, [_|Xs]) :- listInList(List1, Xs).
 % If it returns false, that means you're dropping more elements
 % than there are in the List.
 % Cut so we don't get empty list as result on every call
-dropN(List, N, Output) :- length(X, N), append(X, Output, List), !.
-dropN(_, _, []).
+dropN([], _, []).
+dropN(List, N, Output) :- length(X, N), append(X, Output, List).
 
 listInListAt(ListNeedle, ListHay, N) :- dropN(ListHay, N, NewList), prefix(ListNeedle, NewList).
 
