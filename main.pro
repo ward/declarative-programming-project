@@ -138,6 +138,7 @@ allFreeSpots(
 %%%%
 % TODO: this command fails to find all free spots (using dataset5)
 % container(1, CS, CC), object(1, OS), placeObjectAt(container(1, CS, CC), object(1, OS), 0, 0, NC), printContainer(NC), checkFree(NC, object(2, size(6,2,1)), H, W)
+% Should work now
 checkFree(
 	container(ID, size(CH, CW, CD), [Row|Rows]),
 	object(_, size(OH, OW, _)),
@@ -181,8 +182,7 @@ fillContainer(
 		NC
 	),
 	printContainer(NC),
-	fillContainer(NC, Objects),
-	!.
+	fillContainer(NC, Objects).
 
 fillContainer(
 	container(CID, size(CH, CW, CD), Content),
