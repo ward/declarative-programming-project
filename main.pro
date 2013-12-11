@@ -150,7 +150,7 @@ checkFree(
 	HeightEnd is H + OH,
 	numlist(W, WidthEnd, Xs),
 	numlist(H, HeightEnd, Ys),
-	listCombinations(Xs, Ys, Combined),
+	listCombinations(Ys, Xs, Combined),
 	subset(Combined, Freespots),
 	Height is H,
 	Width is W.
@@ -189,4 +189,4 @@ fillContainer(
 	[Object|Objects]
 ) :-
 	printContainer(container(CID, size(CH, CW, CD), Content)),
-	write([Object|Objects])
+	write([Object|Objects]).
