@@ -135,10 +135,6 @@ allFreeSpots(
 
 % Checks for Height and Width position if object can be placed there
 % (matching the lower left corner of the object to the position)
-%%%%
-% TODO: this command fails to find all free spots (using dataset5)
-% container(1, CS, CC), object(1, OS), placeObjectAt(container(1, CS, CC), object(1, OS), 0, 0, NC), printContainer(NC), checkFree(NC, object(2, size(6,2,1)), H, W)
-% Should work now
 checkFree(
 	container(ID, size(CH, CW, CD), [Row|Rows]),
 	object(_, size(OH, OW, _)),
@@ -147,8 +143,8 @@ checkFree(
 ) :-
 	allFreeSpots(container(ID, size(CH, CW, CD), [Row|Rows]), Freespots),
 	member([H, W], Freespots),
-	WidthEnd is W + OW,
-	HeightEnd is H + OH,
+	WidthEnd is W + OW - 1,
+	HeightEnd is H + OH - 1,
 	numlist(W, WidthEnd, Xs),
 	numlist(H, HeightEnd, Ys),
 	listCombinations(Ys, Xs, Combined),
@@ -181,7 +177,7 @@ fillContainer(
 		W,
 		NC
 	),
-	printContainer(NC),
+	%printContainer(NC),
 	fillContainer(NC, Objects).
 
 fillContainer(
