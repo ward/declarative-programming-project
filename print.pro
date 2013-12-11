@@ -10,4 +10,6 @@ printContent([Row|Rows]) :- printContent(Rows), printRow(Row).
 
 % Recursively print out a row
 printRow([]) :- nl.
-printRow([X|Y]) :- write(X), write(' '), printRow(Y).
+% This one screws up when doing fillContainer for some reason.
+%printRow([0|Y]) :- write(' . '), printRow(Y).
+printRow([X|Y]) :- format('~|~`0t~d~2+', X), write(' '), printRow(Y).
