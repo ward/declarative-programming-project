@@ -180,6 +180,15 @@ fillContainer(
 	%printContainer(NC),
 	fillContainer(NC, Objects).
 
+% So first object in the list doesn't fit.
+% Let's skip it and throw in the second.
+fillContainer(
+	container(CID, size(CH, CW, CD), Content),
+	[Object|Objects]
+) :-
+	fillContainer(container(CID, size(CH, CW, CD), Content), Objects).
+
+% This one gets reached if all previous fail.
 fillContainer(
 	container(CID, size(CH, CW, CD), Content),
 	[Object|Objects]
