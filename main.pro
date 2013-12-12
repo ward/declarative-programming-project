@@ -70,10 +70,17 @@ checkFree(
 % List is output, contains all objects
 allObjects(List) :- findall(object(ID, Size), object(ID, Size), List).
 
+% The cuts are to stop it trying to place objects in the air or something.
+% This way the object always gets placed as low and as left as possible.
+% (in that order).
+% All the possibilities will be found by feeding objects into it in a different
+% order.
 fillContainer(
 	container(CID, size(CH, CW, CD), Content),
 	[]
-) :- printContainer(container(CID, size(CH, CW, CD), Content)).
+) :-
+	write('Empty object list'),
+	printContainer(container(CID, size(CH, CW, CD), Content)), !.
 fillContainer(
 	container(CID, size(CH, CW, CD), Content),
 	[Object|Objects]
@@ -84,6 +91,7 @@ fillContainer(
 		H,
 		W
 	),
+	!,
 	placeObjectAt(
 		container(CID, size(CH, CW, CD), Content),
 		Object,
@@ -94,18 +102,11 @@ fillContainer(
 	%printContainer(NC),
 	fillContainer(NC, Objects).
 
-% So first object in the list doesn't fit.
-% Let's skip it and throw in the second.
-fillContainer(
-	container(CID, size(CH, CW, CD), Content),
-	[Object|Objects]
-) :-
-	fillContainer(container(CID, size(CH, CW, CD), Content), Objects).
-
 % This one gets reached if all previous fail.
 fillContainer(
 	container(CID, size(CH, CW, CD), Content),
 	[Object|Objects]
 ) :-
-	printContainer(container(CID, size(CH, CW, CD), Content)),
-	write([Object|Objects]).
+	write('Non empty object list'),
+	printContainer(container(CID, size(CH, CW, CD), Content)).
+	%write([Object|Objects]).
