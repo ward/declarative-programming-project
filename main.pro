@@ -64,7 +64,8 @@ checkFree(
 	listCombinations(Ys, Xs, Combined),
 	subset(Combined, Freespots),
 	Height is H,
-	Width is W.
+	Width is W,
+	!.
 
 
 % List is output, contains all objects
@@ -134,3 +135,30 @@ findBest(
 % In a sequence [1,2,3,4,5,6,7,8], if it fails (in that order) on 4, then there
 % is no point in also trying out all the other permutations that start with
 % [1,2,3,4,STUFF] since they will all fail on 4 anyway.
+
+tryNext(
+	container(CID, size(CH, CW, CD), Content),
+	[]
+) :- true.
+
+% nth0 takes one out, hold the rest. Each will be taken out in turn.
+tryNext(
+	container(CID, size(CH, CW, CD), Content),
+	Objects
+) :-
+	nth0(N, Objects, Object, OtherObjects),
+	write(Object), nl, write(OtherObjects), nl,
+	checkFree(
+		container(CID, size(CH, CW, CD), Content),
+		Object,
+		H,
+		W
+	),
+	placeObjectAt(
+		container(CID, size(CH, CW, CD), Content),
+		Object,
+		H,
+		W,
+		NC
+	),
+	tryNext(NC, OtherObjects).
