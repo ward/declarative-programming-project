@@ -79,7 +79,7 @@ fillContainer(
 	container(CID, size(CH, CW, CD), Content),
 	[]
 ) :-
-	write('Empty object list'),
+	write('Empty object list'), nl,
 	printContainer(container(CID, size(CH, CW, CD), Content)), !.
 fillContainer(
 	container(CID, size(CH, CW, CD), Content),
@@ -107,6 +107,25 @@ fillContainer(
 	container(CID, size(CH, CW, CD), Content),
 	[Object|Objects]
 ) :-
-	write('Non empty object list'),
-	printContainer(container(CID, size(CH, CW, CD), Content)).
+	true, !.
+	%write('Non empty object list'), nl,
+	%printContainer(container(CID, size(CH, CW, CD), Content)).
 	%write([Object|Objects]).
+
+findBest(
+	container(CID, size(CH, CW, CD), Content),
+	ObjectList,
+	ObjectSolution,
+	AmountOfFreeSpots
+) :-
+	findall(
+		[FS, Objects],
+		(
+			permutation(ObjectList, ObjectSolution),
+			fillContainer(
+				container(CID, size(CH, CW, CD), Content),
+				ObjectSolution
+			)
+		),
+		Solutions
+	).
