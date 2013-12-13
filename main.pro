@@ -112,6 +112,7 @@ fillContainer(
 	%printContainer(container(CID, size(CH, CW, CD), Content)).
 	%write([Object|Objects]).
 
+% This is shit, trying all permutations is SLOW
 findBest(
 	container(CID, size(CH, CW, CD), Content),
 	ObjectList,
@@ -129,3 +130,7 @@ findBest(
 		),
 		Solutions
 	).
+
+% In a sequence [1,2,3,4,5,6,7,8], if it fails (in that order) on 4, then there
+% is no point in also trying out all the other permutations that start with
+% [1,2,3,4,STUFF] since they will all fail on 4 anyway.
