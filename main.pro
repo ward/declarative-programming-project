@@ -178,3 +178,11 @@ mysubset([X|Xs], Y, [X|Zs]) :- mysubset(Xs, Y, Zs).
 mysubset(X, [Y|Ys], [Y|Zs]) :- mysubset(X, Ys, Zs).
 
 
+all :-
+		allObjects(Objects),
+		allContainers(Containers),
+		nth0(0, Containers, C1),
+		nth0(1, Containers, C2),
+		mysubset(ObjectsContainer1, ObjectsContainer2, Objects),
+		tryNext(C1, ObjectsContainer1),
+		tryNext(C2, ObjectsContainer2).
