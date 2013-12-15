@@ -147,7 +147,7 @@ tryNext(
 	Objects
 ) :-
 	nth0(N, Objects, Object, OtherObjects),
-	write(Object), nl, write(OtherObjects), nl,
+	%write(Object), nl, write(OtherObjects), nl,
 	checkFree(
 		container(CID, size(CH, CW, CD), Content),
 		Object,
@@ -162,3 +162,15 @@ tryNext(
 		NC
 	),
 	tryNext(NC, OtherObjects).
+
+
+
+%%%
+% Given an object list.
+% Get all the possible splits into two lists
+% Noting that a split X = [1], Y = [2,3]
+%   is different from X = [2,3]. Y = [1]
+% Order however is not important: X = [1, 2] = [2, 1]
+mysubset([], [], []).
+mysubset([X|Xs], Y, [X|Zs]) :- mysubset(Xs, Y, Zs).
+mysubset(X, [Y|Ys], [Y|Zs]) :- mysubset(X, Ys, Zs).
