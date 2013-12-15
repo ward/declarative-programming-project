@@ -70,6 +70,8 @@ checkFree(
 
 % List is output, contains all objects
 allObjects(List) :- findall(object(ID, Size), object(ID, Size), List).
+% List is output, contains all containers
+allContainers(List) :- findall(container(ID, Size, Content), container(ID, Size, Content), List).
 
 % The cuts are to stop it trying to place objects in the air or something.
 % This way the object always gets placed as low and as left as possible.
@@ -174,3 +176,5 @@ tryNext(
 mysubset([], [], []).
 mysubset([X|Xs], Y, [X|Zs]) :- mysubset(Xs, Y, Zs).
 mysubset(X, [Y|Ys], [Y|Zs]) :- mysubset(X, Ys, Zs).
+
+
