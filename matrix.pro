@@ -22,7 +22,6 @@ matrix_nth0(X, Y, Matrix, Elem) :-
 % Check if block from ([X, X2[, [Y, Y2[) is only Elem
 matrix_nth0_block(X, Y, X2, Y , Matrix, Elem).
 matrix_nth0_block(X, Y, X2, Y2, Matrix, Elem) :-
-	%nth0_line(Y, Y2, Matrix, Row),
 	nth0(Y, Matrix, Row),
 	nth0_line(X, X2, Row, Elem),
 	Y1 is Y + 1,

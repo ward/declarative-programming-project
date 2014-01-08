@@ -1,4 +1,5 @@
 :- consult('containers.pro').
+:- consult('matrix.pro').
 :- consult('containermanipulation.pro').
 :- consult('print.pro').
 :- consult('list_operations.pro').
