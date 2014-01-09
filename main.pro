@@ -161,3 +161,56 @@ all :-
 		tryNext(C1, ObjectsContainer1, C1b),
 		tryNext(C2, ObjectsContainer2, C2b),
 		printContainer(C1b), printContainer(C2b).
+
+
+
+
+/*mostobjects :-
+	allObjects(O),
+	allContainers(Containers),
+	nth0(0, Containers, C1),
+	nth0(1, Containers, C2),
+	permutation(O, Objects),
+	fillInOrder(C1, Objects, C1b, RestOfObjects),
+	fillInOrder(C2, RestOfObjects, C2b, Leftovers),
+	length(Leftovers, N), write(N), nl.*/
+
+
+
+%% Requirement 4: No bigger on top of a smaller one.
+% Heuristic: sort by size, alternatively place in container 1 and container 2.
+
+object_volume(object(_, size(H, W, D)), N) :-
+	N is H * W * D.
+
+% using an insertion sort
+sort_by_volume(Objects, Sorted) :- sort_by_volume(Objects, [], Sorted).
+
+sort_by_volume([], Acc, Acc).
+sort_by_volume([H|T], Acc, Sorted) :-
+	insert_object(H, Acc, NewAcc),
+	sort_by_volume(T, NewAcc, Sorted).
+% Insert object in a sorted spot
+insert_object(X, [Y|T], [Y|NT]) :-
+	object_volume(X, Nx),
+	object_volume(Y, Ny),
+	Nx > Ny,
+	insert_object(X,T,NT).
+insert_object(X, [Y|T], [X,Y|T]) :-
+	object_volume(X, Nx),
+	object_volume(Y, Ny),
+	Nx =< Ny.
+% Reached the end
+insert_object(X, [], [X]).
+	
+
+smallontop :-
+	allObjects(O),
+	container(1, C1),
+	container(2, C2),
+	sort_by_volume(O, O2),
+	reverse(O2, Objects),
+	fill_balanced(C1, C2, Objects).
+
+%% fill_balanced(C1, C2, [O|Os]) :- 
+	
