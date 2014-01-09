@@ -5,68 +5,16 @@
 :- consult('list_operations.pro').
 
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% By definition a coordinate in a container is free if it equals 0.
-findFreeSpot(
-	container(_, _, [Row|_]),
-	FreeHeight,
-	FreeWidth
-) :-
-	nth0(FreeWidth, Row, 0),
-	FreeHeight is 0.
-% Now if there wasn't one free in the previous, we try on the next
-findFreeSpot(
-	container(ID, size(CH, CW, CD), [_|Rows]),
-	FreeHeight,
-	FreeWidth
-) :-
-	CH2 is CH - 1,
-	findFreeSpot(
-		container(ID, size(CH2, CW, CD), Rows),
-		FH,
-		FreeWidth
-	),
-	FreeHeight is FH + 1.
-
-% Now use findFreeSpot to get all the free spots in container
-allFreeSpots(
-	container(ID, size(CH, CW, CD), Content),
-	Freespots
-) :-
-	findall(
-		[H, W],
-		findFreeSpot(
-			container(ID, size(CH, CW, CD), Content),
-			H,
-			W
-		),
-		Freespots
-	).
-
-% Checks for Height and Width position if object can be placed there
-% (matching the lower left corner of the object to the position)
+% Checks if object can be placed at position (W, H) in matrix of container.
 checkFree(
-	container(ID, size(CH, CW, CD), [Row|Rows]),
+	container(ID, size(CH, CW, CD), Content),
 	object(_, size(OH, OW, _)),
-	Height,
-	Width
+	H,
+	W
 ) :-
-	allFreeSpots(container(ID, size(CH, CW, CD), [Row|Rows]), Freespots),
-	member([H, W], Freespots),
-	WidthEnd is W + OW - 1,
-	HeightEnd is H + OH - 1,
-	numlist(W, WidthEnd, Xs),
-	numlist(H, HeightEnd, Ys),
-	listCombinations(Ys, Xs, Combined),
-	subset(Combined, Freespots),
-	Height is H,
-	Width is W,
-	!.
+	matrix_nth0_block(W, H, W2, H2, Content, 0),
+	H2 is H + OH,
+	W2 is W + OW.
 
 
 % List is output, contains all objects

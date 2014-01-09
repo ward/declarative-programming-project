@@ -8,6 +8,7 @@
 % ]
 
 % Check if spots [X, X2[ are Elem
+% Base case is so extensive to get rid of "solutions" of type X=X2
 nth0_line(X, X2, List, Elem) :-
 	nth0(X, List, Elem),
 	X2 is X + 1.
