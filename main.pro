@@ -16,6 +16,20 @@ checkFree(
 	H2 is H + OH,
 	W2 is W + OW.
 
+% Give the first free result and don't look further.
+firstFree(
+	container(ID, size(CH, CW, CD), Content),
+	object(_, size(OH, OW, _)),
+	H,
+	W
+) :-
+	checkFree(
+		container(ID, size(CH, CW, CD), Content),
+		object(_, size(OH, OW, _)),
+		H,
+		W
+	), !.
+
 
 % List is output, contains all objects
 allObjects(List) :- findall(object(ID, Size), object(ID, Size), List).
@@ -90,7 +104,7 @@ findBest(
 tryNext(
 	container(CID, size(CH, CW, CD), Content),
 	[]
-) :- true.
+) :- printContainer(container(CID, size(CH, CW, CD), Content)).
 
 % nth0 takes one out, hold the rest. Each will be taken out in turn.
 tryNext(
@@ -99,7 +113,7 @@ tryNext(
 ) :-
 	nth0(N, Objects, Object, OtherObjects),
 	%write(Object), nl, write(OtherObjects), nl,
-	checkFree(
+	firstFree(
 		container(CID, size(CH, CW, CD), Content),
 		Object,
 		H,
