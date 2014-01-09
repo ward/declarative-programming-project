@@ -212,5 +212,15 @@ smallontop :-
 	reverse(O2, Objects),
 	fill_balanced(C1, C2, Objects).
 
-%% fill_balanced(C1, C2, [O|Os]) :- 
-	
+fill_balanced(C1, C2, []) :- printContainer(C1), printContainer(C2).
+fill_balanced(C1, C2, [O|Os]) :- 
+	container_weight(C1, N1),
+	container_weight(C2, N2),
+	N1 =< N2,
+	firstFree(C1, O, H, W),
+	placeObjectAt(C1, O, H, W, NewC1),
+	fill_balanced(NewC1, C2, Os).
+% C2 is the heavier one or no spot for object
+fill_balanced(C1, C2, Os) :- fill_balanced(C2, C1, Os).
+% No free spot there either, skip this one.
+fill_balanced(C1, C2, [O|Os]) :- fill_balanced(C1, C2, Os).
