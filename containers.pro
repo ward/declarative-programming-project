@@ -1,32 +1,18 @@
-% container(id, size(height, width, depth), content)
-% Every item in the list of lists is a spot of 1x1x1
-container(1, size(10, 10, 1), [
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0]
-]).
+% TODO: Implicitly relies on matrix.pro to be loaded first
 
-container(2, size(10, 10, 1), [
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0],
-	[0,0,0,0,0,0,0,0,0,0]
-]).
+container_weight(container(_, size(CH, CW, CD), Content), N) :-
+	CV is CH * CW * CD,
+	findall([X,Y], matrix_nth0(X, Y, Content, 0), Freespots),
+	length(Freespots, Fn),
+	N is CV - Fn.
 
-% Easily bind a container
-container(N, Container) :-
-	findall(container(ID, Size, Content), container(ID, Size, Content), List),
-	nth1(N, List, Container).
+placeObjectAt(
+	container(ContainerID, size(CH, CW, CD), Content),
+	object(ObjectID, size(ObjectHeight, ObjectWidth, ObjectDepth)),
+	Height,
+	Width,
+	container(ContainerID, size(CH, CW, CD), NewContent)
+) :-
+	H2 is Height + ObjectHeight,
+	W2 is Width  + ObjectWidth ,
+	matrix_set_block(Width, Height, W2, H2, Content, ObjectID, NewContent).

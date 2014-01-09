@@ -1,6 +1,6 @@
-:- consult('containers.pro').
+:- consult('containers_def.pro').
 :- consult('matrix.pro').
-:- consult('containermanipulation.pro').
+:- consult('containers.pro').
 :- consult('print.pro').
 :- consult('list_operations.pro').
 
