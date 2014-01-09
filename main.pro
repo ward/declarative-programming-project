@@ -136,19 +136,36 @@ tryNext(
 % Given an object list.
 % Get all the possible splits into two lists
 % Noting that a split X = [1], Y = [2,3]
-%   is different from X = [2,3]. Y = [1]
+%   is different from X = [2,3], Y = [1]
+%  It's a pity cause it doubles checks for nothing. --> so mysubsets
 % Order however is not important: X = [1, 2] = [2, 1]
 mysubset([], [], []).
 mysubset([X|Xs], Y, [X|Zs]) :- mysubset(Xs, Y, Zs).
 mysubset(X, [Y|Ys], [Y|Zs]) :- mysubset(X, Ys, Zs).
 
+% sort/2 sorts and removes duplicates
+% sort/2 in findall is to make sure things are considered equal in the second
+% sort/2.
+mysubsets(ListIn, ListOfSplits) :-
+	findall(Ls, (mysubset(L1, L2, ListIn), sort([L1, L2], Ls)), L),
+	sort(L, ListOfSplits).
 
+% Gives every possibility with the following criteria:
+%  * Given a set of objects
+%  * Every possible split of this set without being redundant.
+%    Meaning: X=[1],Y=[2,3] is the same as
+%             X=[1],Y=[3,2] is the same as
+%             X=[2,3],Y=[1] is the same as
+%             X=[3,2],Y=[1]
+%  * Given a certain split, place
 all :-
 		allObjects(Objects),
 		allContainers(Containers),
 		nth0(0, Containers, C1),
 		nth0(1, Containers, C2),
-		mysubset(ObjectsContainer1, ObjectsContainer2, Objects),
+		mysubsets(Objects, ObjectSplits),
+		!, % Cut because the permuting only needs to happen beyond here
+		nth0(N, ObjectSplits, [ObjectsContainer1, ObjectsContainer2]),
 		tryNext(C1, ObjectsContainer1, C1b),
 		tryNext(C2, ObjectsContainer2, C2b),
 		printContainer(C1b), printContainer(C2b).
