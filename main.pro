@@ -150,14 +150,6 @@ mysubsets(ListIn, ListOfSplits) :-
 	findall(Ls, (mysubset(L1, L2, ListIn), sort([L1, L2], Ls)), L),
 	sort(L, ListOfSplits).
 
-% Gives every possibility with the following criteria:
-%  * Given a set of objects
-%  * Every possible split of this set without being redundant.
-%    Meaning: X=[1],Y=[2,3] is the same as
-%             X=[1],Y=[3,2] is the same as
-%             X=[2,3],Y=[1] is the same as
-%             X=[3,2],Y=[1]
-%  * Given a certain split, place
 all :-
 		allObjects(Objects),
 		allContainers(Containers),
