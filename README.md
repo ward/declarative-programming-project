@@ -62,6 +62,18 @@ The number 0 is used as the default value. When an object gets added into a
 container, the appropriate values in the matrix get changed to the object's
 `ID`.
 
+### Matrix
+
+Since we essentially keep track of the state of a container by using a matrix,
+it was deemed appropriate to write some functions that handle matrices in ways
+that will be useful.
+
+The concepts deemed appropriate were on the one hand variants of `nth0/3` (one
+for the value in a matrix, one for the value of a range in a list, one for the
+values of a block in a matrix) and on the other hand functions that take a list
+or matrix and change the value (or a range or block of values) on a certain
+spot.
+
 ### all
 
 Prints out every possibility on the screen. Every possiblity here means that
