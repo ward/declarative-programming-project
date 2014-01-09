@@ -177,8 +177,8 @@ all :-
 
 
 
-%% Requirement 4: No bigger on top of a smaller one.
-% Heuristic: sort by size, alternatively place in container 1 and container 2.
+%% Requirement: Best balance and minimal space usage
+% Heuristic: sort by size (big to small), place in most empty container
 
 object_volume(object(_, size(H, W, D)), N) :-
 	N is H * W * D.
@@ -204,23 +204,29 @@ insert_object(X, [Y|T], [X,Y|T]) :-
 insert_object(X, [], [X]).
 	
 
-smallontop :-
+balanced :-
 	allObjects(O),
 	container(1, C1),
 	container(2, C2),
 	sort_by_volume(O, O2),
 	reverse(O2, Objects),
-	fill_balanced(C1, C2, Objects).
+	fill_balanced(C1, C2, Objects, []).
 
-fill_balanced(C1, C2, []) :- printContainer(C1), printContainer(C2).
-fill_balanced(C1, C2, [O|Os]) :- 
+fill_balanced(C1, C2, [], Skipped) :-
+	printContainer(C1),
+	printContainer(C2),
+	write('Skipped: '), write(Skipped), nl.
+fill_balanced(C1, C2, [O|Os], Skipped) :- 
 	container_weight(C1, N1),
 	container_weight(C2, N2),
 	N1 =< N2,
 	firstFree(C1, O, H, W),
 	placeObjectAt(C1, O, H, W, NewC1),
-	fill_balanced(NewC1, C2, Os).
+	fill_balanced(NewC1, C2, Os, Skipped).
 % C2 is the heavier one or no spot for object
-fill_balanced(C1, C2, Os) :- fill_balanced(C2, C1, Os).
+fill_balanced(C1, C2, [O|Os], Skipped) :-
+	firstFree(C2, O, H, W),
+	placeObjectAt(C2, O, H, W, NewC2),
+	fill_balanced(C1, NewC2, Os, Skipped).
 % No free spot there either, skip this one.
-fill_balanced(C1, C2, [O|Os]) :- fill_balanced(C1, C2, Os).
+fill_balanced(C1, C2, [O|Os], Skipped) :- fill_balanced(C1, C2, Os, [O|Skipped]).
