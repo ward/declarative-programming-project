@@ -103,13 +103,15 @@ findBest(
 
 tryNext(
 	container(CID, size(CH, CW, CD), Content),
-	[]
-) :- printContainer(container(CID, size(CH, CW, CD), Content)).
+	[],
+	container(CID, size(CH, CW, CD), Content)
+).
 
 % nth0 takes one out, hold the rest. Each will be taken out in turn.
 tryNext(
 	container(CID, size(CH, CW, CD), Content),
-	Objects
+	Objects,
+	ResultContainer
 ) :-
 	nth0(N, Objects, Object, OtherObjects),
 	%write(Object), nl, write(OtherObjects), nl,
@@ -126,7 +128,7 @@ tryNext(
 		W,
 		NC
 	),
-	tryNext(NC, OtherObjects).
+	tryNext(NC, OtherObjects, ResultContainer).
 
 
 
@@ -147,5 +149,6 @@ all :-
 		nth0(0, Containers, C1),
 		nth0(1, Containers, C2),
 		mysubset(ObjectsContainer1, ObjectsContainer2, Objects),
-		tryNext(C1, ObjectsContainer1),
-		tryNext(C2, ObjectsContainer2).
+		tryNext(C1, ObjectsContainer1, C1b),
+		tryNext(C2, ObjectsContainer2, C2b),
+		printContainer(C1b), printContainer(C2b).
