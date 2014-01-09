@@ -32,6 +32,36 @@ most used objects solution. The chance of putting a heavier object on top of a
 lighter one is also heavily reduced, but not eliminated, by the order we use to
 go through the objects.
 
+## Detailed
+
+### Container and Object
+
+The project has two major data structures around which everything resolves. On
+the one hand there are the objects, as provided in the project description. An
+object is of this form.
+
+    object(ID, size(Height, Length, Depth)).
+
+Throughout the project it is assumed `Depth = 1`.
+
+The other structure is, obviously, a container. These are of the form
+
+    container(ID, size(Height, Length, Depth), Matrix).
+
+Here too `Depth = 1` at all times. The `Matrix` part is a list of lists in
+accordance with the `Height` and `Length` mentioned in `size`. For example if
+`Height` would be 2 and `Width` would be 3, then the `Matrix` would be of the
+form
+
+    [
+        [0,0,0],
+        [0,0,0]
+    ]
+
+The number 0 is used as the default value. When an object gets added into a
+container, the appropriate values in the matrix get changed to the object's
+`ID`.
+
 ### all
 
 Prints out every possibility on the screen. Every possiblity here means that
