@@ -8,7 +8,9 @@
 % ]
 
 % Check if spots [X, X2[ are Elem
-nth0_line(X, X, _, _).
+nth0_line(X, X2, List, Elem) :-
+	nth0(X, List, Elem),
+	X2 is X + 1.
 nth0_line(X, X2, List, Elem) :-
 	nth0(X, List, Elem),
 	X1 is X + 1,
@@ -20,7 +22,10 @@ matrix_nth0(X, Y, Matrix, Elem) :-
 	nth0(X, R, Elem).
 
 % Check if block from ([X, X2[, [Y, Y2[) is only Elem
-matrix_nth0_block(X, Y, X2, Y , Matrix, Elem).
+matrix_nth0_block(X, Y, X2, Y2, Matrix, Elem) :-
+	nth0(Y, Matrix, Row),
+	Y2 is Y + 1,
+	nth0_line(X, X2, Row, Elem).
 matrix_nth0_block(X, Y, X2, Y2, Matrix, Elem) :-
 	nth0(Y, Matrix, Row),
 	nth0_line(X, X2, Row, Elem),
