@@ -192,7 +192,8 @@ balanced :-
 fill_balanced(C1, C2, [], Skipped) :-
 	printContainer(C1),
 	printContainer(C2),
-	write('Skipped: '), write(Skipped), nl.
+	write('Skipped: '), write(Skipped), nl,
+	!. % We're happy with just one solution.
 fill_balanced(C1, C2, [O|Os], Skipped) :- 
 	container_weight(C1, N1),
 	container_weight(C2, N2),

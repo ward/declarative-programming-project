@@ -4,11 +4,33 @@
 
 [Full description](https://ai.vub.ac.be/node/1208).
 
+Given a list of objects, place them in two containers in (a) optimal way(s).
+
 ## Software needed
 
 SWI-Prolog version 6.4.1 for i686-linux
 
-## Functional reqs
+## Overview
+
+At first an attempt was made to find only ideal solutions. It quickly became
+clear how unfeasible this was. Without having a good algorithm at our disposal,
+it just comes down to bruteforcing over a ridiculously high amount of
+combinations.
+
+Instead was opted for a good enough solution. The idea is to first sort the
+given objects from biggest volume to smallest volume. Next we go through the
+list, each time trying to add the object to the container that is
+emptiest/lightest at that moment. When adding an object it is always placed as
+low and as left in the grid as possible. This assures, at the very least, that
+no object will be *completely* floating in the air. If a point is reached that
+the object does not fit in the container, then this object is set aside and the
+algorithm continues with the rest of the objects.
+
+In most of the cases, this will give a decent solution to the problem. Decent in
+the sense that it comes close to a most balanced, least unused spaces as well as
+most used objects solution. The chance of putting a heavier object on top of a
+lighter one is also heavily reduced, but not eliminated, by the order we use to
+go through the objects.
 
 ### all
 
