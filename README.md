@@ -120,14 +120,14 @@ This came down to for a list of length `n`, we receive `2^(n-1)` possibilities.
 That's just splitting up the input into which object goes in which container
 though! It doesn't end there.
 
-Next, given a certain split up of the set into `O1` and `O2`, try all
-arrangements of `O1` into the first container and all arrangements of `O2` in
-the second container. Here the criteria are that every object is placed as low
-as possible and as left as possible when it is handled. This more or less (there
-were some improvements, but they were minor) comes down to trying all
+Next, given a certain split up of the set into `List1` and `List2`, try all
+arrangements of `List1` into the first container and all arrangements of `List2`
+in the second container. Here the criteria are that every object is placed as
+low as possible and as left as possible when it is handled. This more or less
+(there were some improvements, but they were minor) comes down to trying all
 permutations of that part of the split. In other words splitting a list of 4
 objects into two lists of 2 still requires checking up to `2!` (ok that sounds
-less impressive in the low amounts) of arrangements in each container. It 
+less impressive in the low amounts) of arrangements in each container. It
 requires no explanation that this quickly results in *huge* amounts.
 
 TODO: Is this part still needed or do we remove the code?
