@@ -25,8 +25,3 @@ container(2, size(10, 10, 1), [
 	[0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0]
 ]).
-
-% Easily bind a container
-container(N, Container) :-
-	findall(container(ID, Size, Content), container(ID, Size, Content), List),
-	nth1(N, List, Container).

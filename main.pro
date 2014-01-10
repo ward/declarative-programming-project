@@ -31,12 +31,6 @@ firstFree(
 	), !.
 
 
-% List is output, contains all objects
-allObjects(List) :- findall(object(ID, Size), object(ID, Size), List).
-% List is output, contains all containers
-allContainers(List) :- findall(container(ID, Size, Content), container(ID, Size, Content), List).
-
-
 %% Requirement: Best balance and minimal space usage
 % Heuristic: sort by size (big to small), place in most empty container
 

@@ -20,3 +20,7 @@ insert_object(X, [Y|T], [X,Y|T]) :-
 	Nx =< Ny.
 % Reached the end
 insert_object(X, [], [X]).
+
+
+% List is output, contains all objects
+allObjects(List) :- findall(object(ID, Size), object(ID, Size), List).

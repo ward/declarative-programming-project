@@ -1,4 +1,5 @@
 % Test stuff to copy paste into terminal
+% Only used during development. Useless now.
 
 % Possibly handy:
 % http://www.swi-prolog.org/IDE.html
@@ -94,7 +95,7 @@ allObjects(O), tryNext(container(1, size(10, 10, 1), [
 	[0,0,0,0,0,0,0,0,0,0]
 ]), O).
 
-allObjects(O), findall(1, tryNext(container(1, size(10, 10, 1), [
+allObjects(O), findall(1, (write(O),tryNext(container(1, size(10, 10, 1), [
 [0,0,0,0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0,0,0,0],
@@ -105,4 +106,4 @@ allObjects(O), findall(1, tryNext(container(1, size(10, 10, 1), [
 [0,0,0,0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0,0,0,0]
-]), O), L).
+]), O)), L).
