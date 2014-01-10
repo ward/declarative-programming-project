@@ -81,7 +81,17 @@ spot.
 
 ### Working with the data
 
+Some functions are added to manipulate the containers and objects to suit our
+needs.
 
+For the objects there is the addition of a function to calculate its volume as
+well as something to sort a list of objects by volume (lowest volume to highest
+volume). This sort uses insertion sort.
+
+On the container end there are some functions which are mostly wrappers for the
+ones we mentioned creating for matrices. Checking for a free spot is done by
+checking for spots of value 0 in the container's content matrix. Placing an
+object in a container is changing a block of values in its matrix.
 
 ### all
 
