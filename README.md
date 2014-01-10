@@ -158,8 +158,3 @@ permutations of that part of the split. In other words splitting a list of 4
 objects into two lists of 2 still requires checking up to `2!` (ok that sounds
 less impressive in the low amounts) of arrangements in each container. It
 requires no explanation that this quickly results in *huge* amounts.
-
-TODO: Is this part still needed or do we remove the code?
-This is run by issuing `all.`. Every press of `;` gives a new solution. Keep in
-mind that the amount of possibilities quickly becomes *enormous*. Testing it is
-adviced to be done in small amounts of objects, if you want it to ever finish.
