@@ -93,12 +93,28 @@ ones we mentioned creating for matrices. Checking for a free spot is done by
 checking for spots of value 0 in the container's content matrix. Placing an
 object in a container is changing a block of values in its matrix.
 
+## Manual
+
+This section describes how to use the program. Start `swipl` and consult `main.pro`
+or load it immediately on startup by issuing the following command in the terminal
+(while in the project folder).
+
+    swipl -l main.pro
+
+This loads in all the needed predicates except the objects that you want to try
+placing in the two containers. This is a matter of consulting a file that
+contains their definitions. Some example sets are given in the `datasets/`
+folder. For example to load in `data1.txt` from that folder, issue the following
+in the swipl command line.
+
+    consult('datasets/data1.txt').
+
 ## The first attempt
 
-For completeness sake, the attempt to find an ideal solution essentially came
-down to checking pretty much every possibility. As mentioned before, this became
-quickly unfeasible due to the cheer amount of possibilities. While a program
-could be written, it would essentially never finish.
+For completeness sake, the attempt to find an ideal solution is explained here,
+it essentially came down to checking pretty much every possibility. As mentioned
+before, this became quickly unfeasible due to the cheer amount of possibilities.
+While a program could be written, it would essentially never finish.
 
 The idea was that, given a set of objects, the set is split in every way without
 being redundant. By this is meant that the following splits of a list `[1,2,3]`
