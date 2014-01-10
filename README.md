@@ -93,23 +93,44 @@ ones we mentioned creating for matrices. Checking for a free spot is done by
 checking for spots of value 0 in the container's content matrix. Placing an
 object in a container is changing a block of values in its matrix.
 
-### all
+## The first attempt
 
-Prints out every possibility on the screen. Every possiblity here means that
-given a set of objects, split the set of objects in every way without being
-redundant. By this is meant that the following splits of a list `[1,2,3]` are
-all equal.
+For completeness sake, the attempt to find an ideal solution essentially came
+down to checking pretty much every possibility. As mentioned before, this became
+quickly unfeasible due to the cheer amount of possibilities. While a program
+could be written, it would essentially never finish.
+
+The idea was that, given a set of objects, the set is split in every way without
+being redundant. By this is meant that the following splits of a list `[1,2,3]`
+are all equal.
 
     [1]   [2,3]
     [1]   [3,2]
     [2,3] [1]
     [3,2] [1]
 
+So that list of `[1,2,3]` was split up into the following 4:
+
+    [1,2,3] []
+    [1,2]   [3]
+    [1,3]   [2]
+    [2,3]   [1]
+
+This came down to for a list of length `n`, we receive `2^(n-1)` possibilities.
+That's just splitting up the input into which object goes in which container
+though! It doesn't end there.
+
 Next, given a certain split up of the set into `O1` and `O2`, try all
 arrangements of `O1` into the first container and all arrangements of `O2` in
 the second container. Here the criteria are that every object is placed as low
-as possible and as left as possible.
+as possible and as left as possible when it is handled. This more or less (there
+were some improvements, but they were minor) comes down to trying all
+permutations of that part of the split. In other words splitting a list of 4
+objects into two lists of 2 still requires checking up to `2!` (ok that sounds
+less impressive in the low amounts) of arrangements in each container. It 
+requires no explanation that this quickly results in *huge* amounts.
 
+TODO: Is this part still needed or do we remove the code?
 This is run by issuing `all.`. Every press of `;` gives a new solution. Keep in
 mind that the amount of possibilities quickly becomes *enormous*. Testing it is
 adviced to be done in small amounts of objects, if you want it to ever finish.
