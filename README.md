@@ -122,12 +122,18 @@ in the swipl command line.
 
     consult('datasets/data1.txt').
 
+Now that there are some `object`s in the program, finding the solution given our
+strategy is as simple as issuing
+
+    place_objects.
+
 ## The first attempt
 
-For completeness sake, the attempt to find an ideal solution is explained here,
-it essentially came down to checking pretty much every possibility. As mentioned
-before, this became quickly unfeasible due to the cheer amount of possibilities.
-While a program could be written, it would essentially never finish.
+For completeness sake, the *failed* attempt to find an ideal solution is
+explained here, it essentially came down to checking pretty much every
+possibility. As mentioned before, this became quickly unfeasible due to the
+cheer amount of possibilities. While a program could be written, it would
+essentially never finish.
 
 The idea was that, given a set of objects, the set is split in every way without
 being redundant. By this is meant that the following splits of a list `[1,2,3]`
