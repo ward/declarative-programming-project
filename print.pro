@@ -10,6 +10,7 @@ printContent([Row|Rows]) :- printContent(Rows), printRow(Row).
 
 % Recursively print out a row
 printRow([]) :- nl.
-% Cut to make sure when handling a 0, the clause after doesn't trigger as well
+% Cut to make sure that when handling a 0, the clause after doesn't trigger as
+% well.
 printRow([0|Y]) :- write(' . '), printRow(Y), !.
 printRow([X|Y]) :- format('~|~` t~d~2+', X), write(' '), printRow(Y).
