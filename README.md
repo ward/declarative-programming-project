@@ -2,7 +2,7 @@
 
 ## Meta
 
-This is Ward Muylaert's submission for the January 2014 project of the
+This is Ward Muylaert's (#87041) submission for the January 2014 project of the
 Declarative Programming class at the Vrije Universiteit Brussel.
 
 ## Description
@@ -13,7 +13,7 @@ Given a list of objects, place them in two containers in (a) optimal way(s).
 
 ## Software needed
 
-SWI-Prolog version 6.4.1 for i686-linux
+SWI-Prolog version 6.4.1
 
 ## Overview
 
@@ -76,8 +76,7 @@ that will be useful.
 The concepts deemed appropriate were on the one hand variants of `nth0/3` (one
 for the value in a matrix, one for the value of a range in a list, one for the
 values of a block in a matrix) and on the other hand functions that take a list
-or matrix and change the value (or a range or block of values) on a certain
-spot.
+or matrix and change the value on a certain spot (or on a range/block).
 
 ### Working with the data
 
@@ -92,6 +91,20 @@ On the container end there are some functions which are mostly wrappers for the
 ones we mentioned creating for matrices. Checking for a free spot is done by
 checking for spots of value 0 in the container's content matrix. Placing an
 object in a container is changing a block of values in its matrix.
+
+### Execution
+
+The actual algorithm then uses all these things to:
+
+1. Get all the objects and containers
+2. Sort the object list from biggest volume to smallest volume
+3. Step through the list of objects
+    1. If first container is lightest, try to place it there. If container one
+       is not the lightest or if the object doesn't fit, go to the next step.
+    2. Try to place the object in the other container. If it doesn't fit,
+       continue to the next step.
+    3. Object doesn't fit in either container, put it in skipped list.
+    4. Go back to first step with the next object.
 
 ## Manual
 
