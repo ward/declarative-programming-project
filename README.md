@@ -1,5 +1,10 @@
 # Declarative Programming Project
 
+## Meta
+
+This is Ward Muylaert's submission for the January 2014 project of the
+Declarative Programming class at the Vrije Universiteit Brussel.
+
 ## Description
 
 [Full description](https://ai.vub.ac.be/node/1208).
@@ -73,6 +78,10 @@ for the value in a matrix, one for the value of a range in a list, one for the
 values of a block in a matrix) and on the other hand functions that take a list
 or matrix and change the value (or a range or block of values) on a certain
 spot.
+
+### Working with the data
+
+
 
 ### all
 
